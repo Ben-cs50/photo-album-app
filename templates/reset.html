@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+  <div class="box" style="padding:28px">
+    <h3 class="title" style="margin-bottom:8px">Reset password</h3>
+    <p class="footer-hint" style="margin-bottom:16px">Choose a new password to finish</p>
+    <form method="POST">
+      <div class="field">
+        <label class="label" style="color:#e6eef8">New password</label>
+        <div class="control">
+          <input class="input is-medium" type="password" name="password" placeholder="••••••••" autofocus>
+        </div>
+      </div>
+      <button class="button is-block is-info is-fullwidth is-medium">Reset password</button>
+    </form>
+  </div>
+  <p class="footer-hint"><a href="{{ url_for('login') }}" style="color:#f8d277">Back to sign in</a></p>
+</div>
+{% endblock %}
+
+

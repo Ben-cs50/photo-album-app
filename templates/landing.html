@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-6 is-offset-3">
+  <h1 class="title">Welcome to Gallery</h1>
+  <p class="subtitle">Browse albums and photos powered by JSONPlaceholder.</p>
+  {% if not session.get('user') %}
+  <p><a class="button is-info" href="{{ url_for('login') }}">Login</a> or <a class="button is-light" href="{{ url_for('signup') }}">Sign Up</a></p>
+  {% else %}
+  <p><a class="button is-info" href="{{ url_for('home') }}">Go to Home</a></p>
+  {% endif %}
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-8 is-offset-2" style="text-align:left">
+  {% if photo %}
+  <div class="box" style="padding:24px">
+    <h1 class="title">Photo #{{ photo.id }}</h1>
+    <figure class="image">
+      <img src="{{ photo.url }}" alt="{{ photo.title }}" style="border-radius:12px; box-shadow:0 18px 50px rgba(2,6,23,0.6)">
+    </figure>
+    <p style="margin-top:10px"><strong>Title:</strong> {{ photo.title }}</p>
+    <p><strong>Album:</strong> <a href="{{ url_for('album_page', album_id=photo.albumId) }}">#{{ photo.albumId }}</a></p>
+  </div>
+  {% else %}
+  <p>Photo not found.</p>
+  {% endif %}
+</div>
+{% endblock %}
+
+

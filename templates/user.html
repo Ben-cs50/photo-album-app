@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-8 is-offset-2" style="text-align:left">
+  {% if user %}
+  <div class="box" style="padding:24px">
+    <h1 class="title">{{ user.name }}</h1>
+    <div class="columns">
+      <div class="column">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Company:</strong> {{ user.company.name if user.company else '' }}</p>
+      </div>
+      <div class="column">
+        {% if user.address %}
+        <p><strong>Address:</strong> {{ user.address.street }}, {{ user.address.city }}</p>
+        {% endif %}
+      </div>
+    </div>
+    <hr>
+    <h2 class="title is-5">Albums</h2>
+    <div class="columns is-multiline">
+      {% for a in albums %}
+      <div class="column is-one-third">
+        <a class="box" href="{{ url_for('album_page', album_id=a.id) }}">
+          <strong>#{{ a.id }}</strong> — {{ a.title }}
+        </a>
+      </div>
+      {% else %}
+      <div class="column"><p>No albums found.</p></div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <p>User not found.</p>
+  {% endif %}
+</div>
+{% endblock %}
+
+

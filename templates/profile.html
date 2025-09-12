@@ -1,7 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Welcome!
-</h1>
+<div class="column is-8 is-offset-2" style="text-align:left">
+  <div class="box" style="padding:24px">
+    <h1 class="title">Welcome, {{ (user and user.name) or (session.get('user') and session.get('user').name) or 'User' }}!</h1>
+    <div class="columns">
+      <div class="column">
+        {% if user %}
+          <p><strong>Name:</strong> {{ user.name }}</p>
+          <p><strong>Email:</strong> {{ user.email }}</p>
+        {% else %}
+          {% if session.get('user') %}
+            <p><strong>Name:</strong> {{ session['user']['name'] }}</p>
+            <p><strong>Email:</strong> {{ session['user']['email'] }}</p>
+          {% endif %}
+        {% endif %}
+      </div>
+      <div class="column is-narrow">
+        {% if session.get('user') %}
+          <a class="button is-info" href="{{ url_for('user_page', user_id=session['user']['id']) }}">View full profile</a>
+        {% endif %}
+      </div>
+    </div>
+    <hr>
+    <h2 class="title is-5">Your Albums</h2>
+    <div class="columns is-multiline">
+      {% for a in albums %}
+      <div class="column is-one-third">
+        <a class="box" href="{{ url_for('album_page', album_id=a.id) }}">
+          <strong>#{{ a.id }}</strong> — {{ a.title }}
+        </a>
+      </div>
+      {% else %}
+      <div class="column"><p>No albums found.</p></div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 {% endblock %}

@@ -154,25 +154,9 @@
   </div>
 
   <script>
-    // Sample data: albums with photos
-    const albumsData = [
-      { id: 'a1', title: 'Summer Collection', cover: 'https://picsum.photos/id/1015/1200/800', photos: [
-        {id:'p101', src:'https://picsum.photos/id/1015/1200/800', title:'Golden Dusk', artist:'Mira', meta:'Oil on canvas, 2023', desc:'Warm palette exploring evening light.'},
-        {id:'p102', src:'https://picsum.photos/id/1016/1200/800', title:'Field Lines', artist:'Mira', meta:'Acrylic, 2022', desc:'Gestural lines across a meadow.'},
-        {id:'p103', src:'https://picsum.photos/id/1019/1200/800', title:'Shore Whisper', artist:'Mira', meta:'Photography, 2021', desc:'Long exposure at the shoreline.'}
-      ]},
-      { id: 'a2', title: 'Urban Nights', cover: 'https://picsum.photos/id/1043/1200/800', photos: [
-        {id:'p201', src:'https://picsum.photos/id/1043/1200/800', title:'City Glow', artist:'Sera', meta:'C-type print, 2020', desc:'Neon reflections on wet streets.'},
-        {id:'p202', src:'https://picsum.photos/id/1041/1200/800', title:'Midnight Steps', artist:'Sera', meta:'Photography, 2019', desc:'Silent architecture under moonlight.'}
-      ]},
-      { id: 'a3', title: 'Sculptural Forms', cover: 'https://picsum.photos/id/1025/1200/800', photos: [
-        {id:'p301', src:'https://picsum.photos/id/1025/1200/800', title:'Echo', artist:'Lila', meta:'Bronze, 2022', desc:'Concise forms with tactile surfaces.'},
-        {id:'p302', src:'https://picsum.photos/id/1056/1200/800', title:'Folded Time', artist:'Marek', meta:'Mixed media, 2019', desc:'Interleaving planes and shadows.'}
-      ]}
-    ];
-
-    // Flatten all photos for gallery
-    const allPhotos = albumsData.flatMap(album => album.photos.map(photo => ({...photo, album: album.title})));
+    const API_BASE = 'https://jsonplaceholder.typicode.com';
+    let albumsData = [];
+    let allPhotos = [];
 
     const albumsEl = document.getElementById('albums');
     const galleryEl = document.getElementById('gallery');
@@ -185,11 +169,11 @@
         div.innerHTML = `
           <div class="album-thumb" style="background-image:url('${album.cover}')"></div>
           <div class="album-meta">
-            <div class="info"><div class="title">${album.title}</div><div class="count">${album.photos.length} photos</div></div>
+            <div class="info"><div class="title">${album.title}</div><div class="count">${album.photoCount || ''}</div></div>
             <div class="chip">Open</div>
           </div>
         `;
-        div.addEventListener('click', ()=> openAlbum(album.id));
+        div.addEventListener('click', ()=> { window.location.href = '/album/' + album.id; });
         albumsEl.appendChild(div);
       });
     }
@@ -200,17 +184,17 @@
         const art = document.createElement('article');
         art.className = 'card fadeIn';
         art.innerHTML = `
-          <div class="thumb" style="background-image:url('${photo.src}')"></div>
+          <div class="thumb" style="background-image:url('${photo.thumbnailUrl}')"></div>
           <div class="overlay"></div>
           <div class="meta">
             <div>
               <div class="title">${photo.title}</div>
-              <div class="tag">${photo.artist} — ${photo.album}</div>
+              <div class="tag">Album #${photo.albumId}</div>
             </div>
-            <div class="tag">${photo.meta || ''}</div>
+            <div class="tag">ID: ${photo.id}</div>
           </div>
         `;
-        art.addEventListener('click', ()=> openLightbox(photos, photo.id));
+        art.addEventListener('click', ()=> { window.location.href = '/photo/' + photo.id; });
         galleryEl.appendChild(art);
       });
     }
@@ -222,23 +206,6 @@
     const albumPhotos = document.getElementById('albumPhotos');
     const closeAlbum = document.getElementById('closeAlbum');
 
-    function openAlbum(id){
-      const album = albumsData.find(a=>a.id===id);
-      if(!album) return;
-      albumModalTitle.textContent = album.title;
-      albumCount.textContent = `${album.photos.length} photo${album.photos.length>1?'s':''}`;
-      albumPhotos.innerHTML = '';
-      album.photos.forEach(photo => {
-        const a = document.createElement('article');
-        a.className = 'card';
-        a.style.minHeight = '140px';
-        a.innerHTML = `<div class="thumb" style="background-image:url('${photo.src}') ;height:140px"></div><div class="meta"><div class="title">${photo.title}</div><div class="tag">${photo.artist}</div></div>`;
-        a.addEventListener('click', ()=>{ openLightbox(album.photos, photo.id); closeAlbumModal(); });
-        albumPhotos.appendChild(a);
-      });
-      albumModal.classList.add('open');
-      albumModal.setAttribute('aria-hidden','false');
-    }
     function closeAlbumModal(){ albumModal.classList.remove('open'); albumModal.setAttribute('aria-hidden','true'); }
     closeAlbum.addEventListener('click', closeAlbumModal);
     albumModal.addEventListener('click', (e)=>{ if(e.target===albumModal) closeAlbumModal(); });
@@ -267,17 +234,17 @@
 
     function showCurrent(){
       const item = currentSet[currentIndex];
-      lightboxImage.style.backgroundImage = `url('${item.src}')`;
+      lightboxImage.style.backgroundImage = `url('${item.url}')`;
       lightboxTitle.textContent = item.title;
-      lightboxArtist.textContent = `${item.artist} — ${item.meta || ''}`;
-      lightboxDesc.textContent = item.desc || '';
+      lightboxArtist.textContent = `Album #${item.albumId}`;
+      lightboxDesc.textContent = '';
     }
 
     function closeLightbox(){ lightbox.classList.remove('open'); lightbox.setAttribute('aria-hidden','true'); }
 
     prevBtn.addEventListener('click', ()=>{ if(currentIndex>0){ currentIndex--; showCurrent(); } });
     nextBtn.addEventListener('click', ()=>{ if(currentIndex<currentSet.length-1){ currentIndex++; showCurrent(); } });
-    downloadBtn.addEventListener('click', ()=>{ const url = currentSet[currentIndex].src; const a = document.createElement('a'); a.href = url; a.download = (currentSet[currentIndex].title || 'photo') + '.jpg'; document.body.appendChild(a); a.click(); a.remove(); });
+    downloadBtn.addEventListener('click', ()=>{ const url = currentSet[currentIndex].url; const a = document.createElement('a'); a.href = url; a.download = (currentSet[currentIndex].title || 'photo') + '.jpg'; document.body.appendChild(a); a.click(); a.remove(); });
 
     lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) closeLightbox(); });
 
@@ -286,13 +253,36 @@
     searchInput.addEventListener('input', ()=>{
       const q = searchInput.value.trim().toLowerCase();
       if(!q) return renderGallery(allPhotos);
-      const filtered = allPhotos.filter(p=> (p.title+p.artist+p.album+(p.meta||'')).toLowerCase().includes(q) );
+      const filtered = allPhotos.filter(p=> (p.title+String(p.albumId)).toLowerCase().includes(q) );
       renderGallery(filtered);
     });
 
-    // Initial render
-    renderAlbums();
-    renderGallery(allPhotos);
+    async function loadData(){
+      try{
+        const [albumsResp, photosResp] = await Promise.all([
+          fetch(`${API_BASE}/albums`),
+          fetch(`${API_BASE}/photos`)
+        ]);
+        const albums = await albumsResp.json();
+        const photos = await photosResp.json();
+        // Map first photo per album to use as cover and count photos per album
+        const firstPhotoByAlbum = {};
+        const counts = {};
+        for(const p of photos){
+          if(firstPhotoByAlbum[p.albumId] === undefined){ firstPhotoByAlbum[p.albumId] = p; }
+          counts[p.albumId] = (counts[p.albumId] || 0) + 1;
+        }
+        albumsData = albums.slice(0,9).map(a=> ({...a, cover: (firstPhotoByAlbum[a.id] && firstPhotoByAlbum[a.id].thumbnailUrl) || '', photoCount: counts[a.id] || 0 }));
+        // Use a subset for gallery for performance but still from the API
+        allPhotos = photos.slice(0, 60);
+        renderAlbums();
+        renderGallery(allPhotos);
+      }catch(e){
+        console.error(e);
+      }
+    }
+
+    loadData();
 
     // expose toggle
     document.getElementById('toggleAlbums').addEventListener('click', ()=>{ const sc = document.querySelector('section'); sc.scrollIntoView({behavior:'smooth'}); });

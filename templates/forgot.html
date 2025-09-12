@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="column is-4 is-offset-4">
+  <div class="box" style="padding:28px">
+    <h3 class="title" style="margin-bottom:8px">Forgot password</h3>
+    <p class="footer-hint" style="margin-bottom:16px">Enter your email to receive a reset link</p>
+    <form method="POST" action="/forgot">
+      <div class="field">
+        <label class="label" style="color:#e6eef8">Email</label>
+        <div class="control">
+          <input class="input is-medium" type="email" name="email" placeholder="you@example.com" autofocus>
+        </div>
+      </div>
+      <button class="button is-block is-info is-fullwidth is-medium">Send reset link</button>
+    </form>
+  </div>
+  <p class="footer-hint"><a href="{{ url_for('login') }}" style="color:#f8d277">Back to sign in</a></p>
+</div>
+{% endblock %}
+
+

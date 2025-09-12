@@ -2,29 +2,32 @@
 
 {% block content %}
 <div class="column is-4 is-offset-4">
-    <h3 class="title">Sign Up</h3>
-    <div class="box">
-        <form method="POST" action="/signup">
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="text" name="name" placeholder="Name" autofocus="">
-                </div>
-            </div>
-
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="password" name="password" placeholder="Password">
-                </div>
-            </div>
-
-            <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
-        </form>
-    </div>
+  <div class="box" style="padding:28px">
+    <h3 class="title" style="margin-bottom:8px">Create your account</h3>
+    <p class="footer-hint" style="margin-bottom:16px">Start exploring albums and photos</p>
+    <form method="POST" action="/signup">
+      <div class="field">
+        <label class="label" style="color:#e6eef8">Email</label>
+        <div class="control">
+          <input class="input is-medium" type="email" name="email" placeholder="you@example.com" autofocus="">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label" style="color:#e6eef8">Name</label>
+        <div class="control">
+          <input class="input is-medium" type="text" name="name" placeholder="Your name">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label" style="color:#e6eef8">Password</label>
+        <div class="control">
+          <input class="input is-medium" type="password" name="password" placeholder="••••••••">
+        </div>
+      </div>
+      <button class="button is-block is-info is-fullwidth is-medium">Sign up</button>
+      <p class="footer-hint">Accounts are stored locally. You can also log in with JSONPlaceholder emails.</p>
+    </form>
+  </div>
+  <p class="footer-hint">Already have an account? <a href="{{ url_for('login') }}" style="color:#f8d277">Sign in</a></p>
 </div>
 {% endblock %}
