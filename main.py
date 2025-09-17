@@ -171,6 +171,18 @@ def user_page(user_id: int):
         pass
     return render_template('user.html', user=user, albums=albums)
 
+@app.route('/albums')
+@login_required
+def albums_page():
+    return render_template('albums.html')
+
+
+@app.route('/photos')
+@login_required
+def photos_page():
+    return render_template('photos.html')
+
+
 
 @app.route('/album/<int:album_id>')
 @login_required
@@ -237,6 +249,6 @@ def api_users_create():
     return jsonify(u.to_dict()), 201
 
 
-
- 
-app.run(host="0.0.0.0", port=80)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", "5000"))
+    app.run(host="0.0.0.0", port=port)
