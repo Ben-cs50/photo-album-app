@@ -1,0 +1,187 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false,
+    "start": "2025-09-18T17:10:18.778Z",
+    "end": "2025-09-18T17:10:30.602Z",
+    "duration": 11824
+  },
+  "results": [
+    {
+      "uuid": "a0c443f5-8b7e-4a84-a979-8139afdcd497",
+      "title": "",
+      "fullFile": "cypress\\e2e\\Landing.cy.js",
+      "file": "cypress\\e2e\\Landing.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "1bf2909f-1f05-4a12-b3cc-20ba2f041edc",
+          "title": "Landing Page",
+          "fullFile": "cypress\\e2e\\Landing.cy.js",
+          "file": "cypress\\e2e\\Landing.cy.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Landing Page exist",
+              "fullTitle": "Landing Page Landing Page exist",
+              "timedOut": null,
+              "duration": 8594,
+              "state": "passed",
+              "speed": "medium",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('[data-test=\"Landing\"]').should('exist');",
+              "err": {},
+              "uuid": "359fa928-41d7-411a-802b-a9232d41a9bc",
+              "parentUUID": "1bf2909f-1f05-4a12-b3cc-20ba2f041edc",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Landing title exist",
+              "fullTitle": "Landing Page Landing title exist",
+              "timedOut": null,
+              "duration": 632,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('[data-test=\"landing-title\"]').should('be.visible').and('contain.text', 'Welcome to Gallery');",
+              "err": {},
+              "uuid": "23e2e22c-d028-45f4-bcf4-dc103d783ab1",
+              "parentUUID": "1bf2909f-1f05-4a12-b3cc-20ba2f041edc",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Landing subtitle exist",
+              "fullTitle": "Landing Page Landing subtitle exist",
+              "timedOut": null,
+              "duration": 314,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('[data-test=\"landing-subtitle\"]').should('be.visible').and('contain.text', 'Browse albums and photos powered');",
+              "err": {},
+              "uuid": "0051e1fd-7a5a-4282-a356-2a4057a393b3",
+              "parentUUID": "1bf2909f-1f05-4a12-b3cc-20ba2f041edc",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Navigates to login when button is clicked",
+              "fullTitle": "Landing Page Navigates to login when button is clicked",
+              "timedOut": null,
+              "duration": 742,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('[data-test=\"login-btn\"]').should('be.visible').click();\ncy.location('pathname').should('eq', '/login');",
+              "err": {},
+              "uuid": "2fa300d8-ebd7-471b-b737-74a4d967635c",
+              "parentUUID": "1bf2909f-1f05-4a12-b3cc-20ba2f041edc",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Navigates to signup when button is clicked",
+              "fullTitle": "Landing Page Navigates to signup when button is clicked",
+              "timedOut": null,
+              "duration": 1077,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/');\ncy.get('[data-test=\"signup-btn\"]').should('be.visible').click();\ncy.location('pathname').should('eq', '/signup');\n//go back to landing page\ncy.go('back');",
+              "err": {},
+              "uuid": "4f7b98a3-dad6-42ab-9179-b507a6c8a516",
+              "parentUUID": "1bf2909f-1f05-4a12-b3cc-20ba2f041edc",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "359fa928-41d7-411a-802b-a9232d41a9bc",
+            "23e2e22c-d028-45f4-bcf4-dc103d783ab1",
+            "0051e1fd-7a5a-4282-a356-2a4057a393b3",
+            "2fa300d8-ebd7-471b-b737-74a4d967635c",
+            "4f7b98a3-dad6-42ab-9179-b507a6c8a516"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 11359,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "index",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress\\reports\\html\\.jsons",
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "reportFilename": "index",
+        "charts": true,
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "saveHtml": true,
+        "saveJson": true
+      },
+      "version": "6.3.0"
+    }
+  }
+}
