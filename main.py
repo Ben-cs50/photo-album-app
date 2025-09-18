@@ -221,6 +221,7 @@ def api_users_list():
     return jsonify([u.to_dict() for u in users])
 
 
+
 @app.route('/api/users/<int:user_id>', methods=['GET'])
 def api_users_get(user_id: int):
     u = User.query.get_or_404(user_id)
@@ -249,6 +250,6 @@ def api_users_create():
     return jsonify(u.to_dict()), 201
 
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", "5000"))
-    app.run(host="0.0.0.0", port=port)
+# if __name__ == "__main__":
+#     port = int(os.environ.get("PORT", "5000"))
+#     app.run(host="0.0.0.0", port=port,debug=True)
