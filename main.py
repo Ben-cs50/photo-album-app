@@ -1,5 +1,5 @@
 #!/bin/python3
-from flask import Flask, flash, redirect, render_template, request, url_for, session, jsonify
+from flask import Flask, flash, redirect, render_template, request, url_for, session, jsonify,abort
 import requests
 import json
 from flask_sqlalchemy import SQLAlchemy
@@ -182,6 +182,36 @@ def albums_page():
 def photos_page():
     return render_template('photos.html')
 
+@app.route('/posts')
+# @login_required
+def get_posts():
+    posts = requests.get(f"{API_BASE}/posts", timeout=10)
+    if posts.ok:
+         return posts.json()
+    
+@app.route('/posts/<int:post_id>')
+# @login_required
+def get_post_by_id(post_id: int):
+    posts = requests.get(f"{API_BASE}/posts/{post_id}", timeout=10)
+    if posts.ok:
+         return posts.json()
+    return abort(404,description="post not found")
+
+
+@app.route('/comments')
+# @login_required
+def get_comments():
+    comments = requests.get(f"{API_BASE}/comments", timeout=10)
+    if comments.ok:
+         return comments.json()
+    
+@app.route('/comments/<int:comment_id>')
+# @login_required
+def get_comments_by_id(comment_id: int):
+    comments = requests.get(f"{API_BASE}/comments/{comment_id}", timeout=10)
+    if comments.ok:
+         return comments.json()
+    return abort(404,description="comments not found")
 
 
 @app.route('/album/<int:album_id>')
