@@ -43,7 +43,7 @@ with app.app_context():
 def index():
      return render_template('landing.html')
 
-@app.route("/home")
+@app.route("/dashboard")
 @login_required
 def home():
      return render_template('index.html')
