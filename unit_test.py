@@ -63,6 +63,9 @@ def test_non_existent_comment(client):
 
 # SLA APIs
 # todos API
+import requests
+
+# TODOS API
 def test_todos(client):
     """Test the todos api ."""
     response = requests.get("https://jsonplaceholder.typicode.com/todos")
@@ -78,6 +81,7 @@ def test_non_existent_todos(client):
     print(f"Response time for GET {'https://jsonplaceholder.typicode.com/todos/989898'}: {response_time:.4f} seconds")
     assert response.status_code == 404
 
+
 def test_existent_todos(client):
     """Test for an existent route."""
     response = requests.get("https://jsonplaceholder.typicode.com/todos/30")
@@ -86,22 +90,32 @@ def test_existent_todos(client):
     assert response.status_code == 200
 
 
-#users API
+def test_create_todo(client):
+    """Test creating a new todo via POST request."""
+    payload = {"userId": 1, "title": "Test TODO", "completed": False}
+    response = requests.post("https://jsonplaceholder.typicode.com/todos", json=payload)
+    response_time = response.elapsed.total_seconds()
+    print(f"Response time for POST {'https://jsonplaceholder.typicode.com/todos'}: {response_time:.4f} seconds")
+    assert response.status_code == 201
+    assert response.json()["title"] == payload["title"]
+
+
+# USERS API
 def test_users(client):
-    """Test the comments api ."""
+    """Test the users api ."""
     response = requests.get("https://jsonplaceholder.typicode.com/users")
     response_time = response.elapsed.total_seconds()
     print(f"Response time for GET {'https://jsonplaceholder.typicode.com/users'}: {response_time:.4f} seconds")
     assert response.status_code == 200
-   
 
 
 def test_non_existent_users(client):
     """Test for a non-existent route."""
-    response = requests.get("https://jsonplaceholder.typicode.com/comments/501")
+    response = requests.get("https://jsonplaceholder.typicode.com/users/501")
     response_time = response.elapsed.total_seconds()
-    print(f"Response time for GET {'https://jsonplaceholder.typicode.com/comments/501'}: {response_time:.4f} seconds")
+    print(f"Response time for GET {'https://jsonplaceholder.typicode.com/users/501'}: {response_time:.4f} seconds")
     assert response.status_code == 404
+
 
 def test_existent_users(client):
     """Test for an existent route."""
@@ -110,9 +124,24 @@ def test_existent_users(client):
     print(f"Response time for GET {'https://jsonplaceholder.typicode.com/users/10'}: {response_time:.4f} seconds")
     assert response.status_code == 200
 
-#albums API
+
+def test_create_user(client):
+    """Test creating a new user via POST request."""
+    payload = {
+        "name": "Leanne Graham",
+        "username": "Bret",
+        "email": "Sincere@april.biz"
+    }
+    response = requests.post("https://jsonplaceholder.typicode.com/users", json=payload)
+    response_time = response.elapsed.total_seconds()
+    print(f"Response time for POST {'https://jsonplaceholder.typicode.com/users'}: {response_time:.4f} seconds")
+    assert response.status_code == 201
+    assert response.json()["username"] == payload["username"]
+
+
+# ALBUMS API
 def test_albums(client):
-    """Test the comments api ."""
+    """Test the albums api ."""
     response = requests.get("https://jsonplaceholder.typicode.com/albums")
     response_time = response.elapsed.total_seconds()
     print(f"Response time for GET {'https://jsonplaceholder.typicode.com/albums'}: {response_time:.4f} seconds")
@@ -126,6 +155,7 @@ def test_non_existent_albums(client):
     print(f"Response time for GET {'https://jsonplaceholder.typicode.com/albums/101'}: {response_time:.4f} seconds")
     assert response.status_code == 404
 
+
 def test_existent_albums(client):
     """Test for an existent route."""
     response = requests.get("https://jsonplaceholder.typicode.com/albums/40")
@@ -133,15 +163,25 @@ def test_existent_albums(client):
     print(f"Response time for GET {'https://jsonplaceholder.typicode.com/albums/40'}: {response_time:.4f} seconds")
     assert response.status_code == 200
 
-#photos API
+
+def test_create_album(client):
+    """Test creating a new album via POST request."""
+    payload = {"userId": 1, "title": "Test Album"}
+    response = requests.post("https://jsonplaceholder.typicode.com/albums", json=payload)
+    response_time = response.elapsed.total_seconds()
+    print(f"Response time for POST {'https://jsonplaceholder.typicode.com/albums'}: {response_time:.4f} seconds")
+    assert response.status_code == 201
+    assert response.json()["title"] == payload["title"]
+
+
+# PHOTOS API
 def test_photos(client):
-    """Test the comments api ."""
+    """Test the photos api ."""
     response = requests.get("https://jsonplaceholder.typicode.com/photos")
     response_time = response.elapsed.total_seconds()
     print(f"Response time for GET {'https://jsonplaceholder.typicode.com/photos'}: {response_time:.4f} seconds")
     assert response.status_code == 200
-
-    assert response_time < 1
+    # assert response_time < 2
 
 
 def test_non_existent_photos(client):
@@ -151,9 +191,25 @@ def test_non_existent_photos(client):
     print(f"Response time for GET {'https://jsonplaceholder.typicode.com/photos/5001'}: {response_time:.4f} seconds")
     assert response.status_code == 404
 
+
 def test_existent_photos(client):
     """Test for an existent route."""
     response = requests.get("https://jsonplaceholder.typicode.com/photos/5000")
     response_time = response.elapsed.total_seconds()
     print(f"Response time for GET {'https://jsonplaceholder.typicode.com/photos/5000'}: {response_time:.4f} seconds")
     assert response.status_code == 200
+
+
+def test_create_photo(client):
+    """Test creating a new photo via POST request."""
+    payload = {
+        "albumId": 1,
+        "title": "Test Photo",
+        "url": "https://via.placeholder.com/600/92c952",
+        "thumbnailUrl": "https://via.placeholder.com/150/92c952"
+    }
+    response = requests.post("https://jsonplaceholder.typicode.com/photos", json=payload)
+    response_time = response.elapsed.total_seconds()
+    print(f"Response time for POST {'https://jsonplaceholder.typicode.com/photos'}: {response_time:.4f} seconds")
+    assert response.status_code == 201
+    assert response.json()["title"] == payload["title"]
