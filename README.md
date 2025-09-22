@@ -66,6 +66,7 @@ npx cypress run
 
 * Report path: `cypress/reports/html/index.html`
 * You can double-click the file or use `Ctrl+O` in a browser to open it.
+* Sample report: file:///C:/Users/Administrator/Desktop/photo-album-app/cypress/reports/html/index.html
 
 > The report includes:
 
